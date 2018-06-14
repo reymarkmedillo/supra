@@ -61,6 +61,9 @@ Route::group(['middleware' => ['session_auth', 'web_user', 'admin_user']], funct
     Route::post('/category/update/{category_id}', ['as'=> 'postUpdateCategory','uses'=> 'CategoryController@postUpdateCategory']);
     // "REPORTS"
     Route::get('/reports/syllabus', ['as'=> 'getCategoryTree','uses'=> 'ReportController@getCategoryTree']);
+    Route::get('/reports/syllabus-tree', function() {
+        return redirect('/reports/syllabus?action=rw');
+    });
     Route::post('/reports/syllabus-tree', ['as'=> 'postCategoryTree','uses'=> 'ReportController@postCategoryTree']);
 });
 

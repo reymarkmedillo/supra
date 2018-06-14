@@ -1,5 +1,9 @@
 @extends('master')
 @section('content')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{url('/')}}/bower_components/select2/dist/css/select2.min.css">
+<!-- Select2 -->
+<script src="{{url('/')}}/bower_components/select2/dist/js/select2.full.min.js"></script>
 <!-- Main content -->
 <section class="invoice">
     <!-- title row -->
@@ -7,7 +11,7 @@
         <div class="col-xs-12">
             <h2 class="page-header">
             <i class="fa fa-globe"></i> {{$main_category_name}}
-            <small class="pull-right">Date: 2/10/2014</small>
+            <small class="pull-right">{{date('m/d/Y')}}</small>
             </h2>
         </div>
         <!-- /.col -->
@@ -19,7 +23,7 @@
                 @foreach($category_tree as $category)
                 <li> {{$category->name}} &nbsp;&nbsp;&nbsp;
                     @if($rw)
-                    <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal"><i class="fa fa-plus-square-o"></i></a>
+                    <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal" onclick="setButtonFunc('{{$category->id}}');"><i class="fa fa-plus-square-o"></i></a>
                     @endif
                     <div id="{{$category->id}}"></div>
                     <!-- LEVEL 1 -->
@@ -28,7 +32,7 @@
                         @foreach($category->children as $subcategory1)
                         <li> {{$subcategory1->name}} &nbsp;&nbsp;&nbsp; 
                             @if($rw)
-                            <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal"><i class="fa fa-plus-square-o"></i></a>
+                            <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal" onclick="setButtonFunc('{{$subcategory1->id}}');"><i class="fa fa-plus-square-o"></i></a>
                             @endif
                             <div id="{{$subcategory1->id}}"></div>
                             <!-- LEVEL 2 -->
@@ -37,7 +41,7 @@
                                 @foreach($subcategory1->children as $subcategory2)
                                 <li> {{$subcategory2->name}} &nbsp;&nbsp;&nbsp; 
                                     @if($rw)
-                                    <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal"><i class="fa fa-plus-square-o"></i></a>
+                                    <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal" onclick="setButtonFunc('{{$subcategory2->id}}');"><i class="fa fa-plus-square-o"></i></a>
                                     @endif
                                     <div id="{{$subcategory2->id}}"></div>
                                     <!-- LEVEL 3 -->
@@ -46,7 +50,7 @@
                                         @foreach($subcategory2->children as $subcategory3)
                                         <li> {{$subcategory3->name}} &nbsp;&nbsp;&nbsp; 
                                             @if($rw)
-                                            <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal"><i class="fa fa-plus-square-o"></i></a>
+                                            <a href="#" class="text-muted" data-toggle="modal" data-target="#caseModal" onclick="setButtonFunc('{{$subcategory3->id}}');"><i class="fa fa-plus-square-o"></i></a>
                                             @endif
                                             <div id="{{$subcategory3->id}}"></div>
                                         </li>
@@ -84,30 +88,49 @@
 
 </section>
 <!-- MODAL -->
-<div class="modal fade" id="caseModal" tabindex="-1" role="dialog" aria-labelledby="caseModal">
+<div class="modal fade" id="caseModal" role="dialog" aria-labelledby="caseModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="caseModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="caseModalLabel">Approved Case List</h4>
       </div>
       <div class="modal-body">
-        ...
+        <div class="form-group">
+        <select class="form-control select2" id="case_list" required></select>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="btncaseModal">Add</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// var theDiv = document.getElementById("CIVIL1A");
-// var z = document.createElement('div');
-// var text = z.innerHTML;
-// z.innerHTML += '<p>adsfadsfadsfasdfasd</p>';
+    function setButtonFunc(categoryID) {
+        console.log('set', categoryID);
+        var btn = document.getElementById('btncaseModal');
+        var case_list = <?php echo json_encode($cases); ?>;
+        
+        $('#case_list').select2({
+            data: case_list,
+            width: '100%'
+        });
+        btn.setAttribute('onclick', 'addCase("'+categoryID+'");');
+    }
 
-// theDiv.appendChild(z);
+    function addCase(categoryID) {
+        var theDiv = document.getElementById(categoryID);
+        var data = $('#case_list').select2('data');
+        var z = document.createElement('div');
+        var text = z.innerHTML;
+        if(data[0].text) {
+            z.innerHTML += '<p>&#8226;&nbsp;&nbsp;&nbsp;'+data[0].text+'</p>';
+            theDiv.appendChild(z);
+        }
+        $('#caseModal').modal('toggle'); 
+    }
 </script>
 <!-- /.content -->
 <div class="clearfix"></div>
