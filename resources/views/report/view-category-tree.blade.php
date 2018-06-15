@@ -109,7 +109,6 @@
 
 <script>
     function setButtonFunc(categoryID) {
-        console.log('set', categoryID);
         var btn = document.getElementById('btncaseModal');
         var case_list = <?php echo json_encode($cases); ?>;
         
@@ -126,10 +125,19 @@
         var z = document.createElement('div');
         var text = z.innerHTML;
         if(data[0].text) {
-            z.innerHTML += '<p>&#8226;&nbsp;&nbsp;&nbsp;'+data[0].text+'</p>';
+            z.innerHTML += '<p>&#8226;&nbsp;&nbsp;&nbsp;'+data[0].text+ '&nbsp;&nbsp;&nbsp;'
+            +'<a href="#" class="text-muted" onclick="removeCase(this);">'
+            +'<i class="fa fa-minus-square-o"></i></a>'
+            +'</p>';
             theDiv.appendChild(z);
         }
         $('#caseModal').modal('toggle'); 
+    }
+
+    function removeCase(element) {
+        // $(this).closest('p').remove();
+        var parent = element.parentNode;
+        parent.parentNode.removeChild(parent);
     }
 </script>
 <!-- /.content -->
