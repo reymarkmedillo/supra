@@ -182,6 +182,7 @@
       // "add blank option"
       document.getElementById("case_parent").insertBefore(new Option('', ''), document.getElementById("case_parent").firstChild);
       document.getElementById("case_child").insertBefore(new Option('', ''), document.getElementById("case_child").firstChild);
+      document.getElementById("topic_select").insertBefore(new Option('', ''), document.getElementById("topic_select").firstChild);
 
       $('#case_child').select2({
         data: <?php echo json_encode($case_list); ?>
@@ -190,12 +191,11 @@
         data: <?php echo json_encode($case_list); ?>
       });
       $('#topic_select').select2({
-        data: <?php echo json_encode($top_categories); ?>
+        data: <?php echo json_encode($top_categories); ?>,
+        placeholder: "Please choose a category"
       });
       $('#case_child').select2().val(case_child).trigger('change');
       $('#case_parent').select2().val(case_parent).trigger('change');
-      console.log(case_child);
-      console.log(case_parent);
       // "END < REFERENCE CASE"
 
     // "START > RELATED CASE IS CHECKED EVENT"
@@ -223,7 +223,6 @@
     });
     // "END < RELATED CASE IS CHECKED EVENT"
 
-    $('.select2').select2();
     $('#case_date').inputmask('Aaa 99, 9999', {placeholder: 'Mmm dd, yyyy'});
     $("#case_date" ).datepicker({
       dateFormat: "M dd, yy"
@@ -233,13 +232,15 @@
       var data = e.params.data;
       if(data.id) {
         $('#topic_select').empty().trigger("change");
+        document.getElementById("topic_select").insertBefore(new Option('', ''), document.getElementById("topic_select").firstChild);
         $("#topics").append($('<option>', {value:data.id, text: data.text}));
         $.ajax({
           type: 'GET',
           url: '/case/category/'+data.id,
           success: function(res) {
             $('#topic_select').select2({
-              data: res
+              data: res,
+              placeholder: "Please choose a category"
             });
           }
         });
@@ -261,19 +262,26 @@
 
         if($(this).find('option:last').length > 0) {
           $('#topic_select').empty().trigger("change");
+          document.getElementById("topic_select").insertBefore(new Option('', ''), document.getElementById("topic_select").firstChild);
           $.ajax({
             type: 'GET',
             url: '/case/category/'+$(this).find('option:last')[0].value,
             success: function(res) {
               $('#topic_select').select2({
-                data: res
+                data: res,
+                placeholder: "Please choose a category"
               });
+            },
+            error: function(e) {
+              console.log(e);
             }
           });
         } else {
           $('#topic_select').empty().trigger("change");
+          document.getElementById("topic_select").insertBefore(new Option('', ''), document.getElementById("topic_select").firstChild);
           $('#topic_select').select2({
-            data: <?php echo json_encode($top_categories); ?>
+            data: <?php echo json_encode($top_categories); ?>,
+            placeholder: "Please choose a category"
           });
         }
       }
