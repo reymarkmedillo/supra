@@ -27,7 +27,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="case_title">Search Parent</label>
-                <select class="form-control select2" name="cat_parent" id="cat_parent" required></select>
+                <select class="form-control select2" name="cat_parent" id="cat_parent"></select>
               </div>
             </div>
             <div class="col-md-6">
