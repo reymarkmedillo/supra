@@ -55,6 +55,11 @@ class CaseModel extends ApiModel
         return $res->getBody();
     }
 
+    public function getCasesByCategory($data = array()) {
+        $res = $this->callByAuth('POST', env('API_URL').'/list-dropdown/case-by-category', $data);
+        return $res->getBody();
+    }
+
     public function approveDraftCase($case_id, $data) {
         $res = $this->callByAuth('POST', env('API_URL').'/drafts/approval-case/'.$case_id, $data);
         return $res->getBody();

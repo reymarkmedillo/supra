@@ -49,7 +49,6 @@ class ReportController extends Controller
      */
     public function postCategoryTree(Request $request) 
     {
-        $request->request->add(['db'=> 'live']); // to get the live cases
         $case_list = $this->case->getAllDropdownDraftCases($request->all());
 
         $rw = false;
@@ -65,5 +64,10 @@ class ReportController extends Controller
             'cases' => $case_list->cases
             ]
         );
+    }
+
+    public function getCasesByCategory(Request $request) {
+        $categories = $this->case->getCasesByCategory($request->all());
+        return response()->json($categories);
     }
 }

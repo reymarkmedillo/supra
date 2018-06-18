@@ -50,6 +50,7 @@ Route::group(['middleware' => ['session_auth', 'web_user', 'admin_user']], funct
     // "AJAX ROUTES"
     Route::get('/case/category/{parent_id}', ['as'=> 'getCategory','uses'=> 'CaseController@getCategory']);
     Route::post('/case/approve/{case_id}', ['as'=>'postApproveCase', 'uses'=>'CaseController@postApproveCase']);
+    Route::post('/list-dropdown/case-by-category', ['as'=>'getCasesByCategory', 'uses'=>'ReportController@getCasesByCategory']);
     Route::get('/case/remove/{case_id}', ['as'=>'deleteCase', 'uses'=>'CaseApprovedController@deleteCase']);
     Route::get('/users/remove/{user_id}', ['as'=>'postRemoveUser', 'uses'=>'UserController@postRemoveUser']);
     // "CATEGORIES"
