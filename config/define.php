@@ -10,8 +10,8 @@ return [
         'admin' => 'Admin'
     ],
     'user_functions' => [
-        'user' => ['Contributor'],
-        'admin' => ['Editor']
+        'user' => ['Contributor','Educator','Subscriber','Demo'],
+        'admin' => ['Editor', 'Chief Editor']
     ],
     'statuses' => [
         'controlling' => 'Controlling',

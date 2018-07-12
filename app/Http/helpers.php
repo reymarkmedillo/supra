@@ -18,6 +18,11 @@ function checkIfPaid() {
 
 function nonPaymentRoles() {
     $role = (session()->get('user')->role=='admin')?session()->get('user')->role:session()->get('user')->user_role_function;
+    if( $role == 'admin') {
+        if(isset(session()->get('user')->user_role_function) && strlen(session()->get('user')->user_role_function) > 1) {
+            $role = session()->get('user')->user_role_function;
+        }
+    }
     if(in_array($role, config('permissions.no_payment')) ) {
         return true;
     }
@@ -25,6 +30,11 @@ function nonPaymentRoles() {
 }
 function caseSubmittersRoles() {
     $role = (session()->get('user')->role=='admin')?session()->get('user')->role:session()->get('user')->user_role_function;
+    if( $role == 'admin') {
+        if(isset(session()->get('user')->user_role_function) && strlen(session()->get('user')->user_role_function) > 1) {
+            $role = session()->get('user')->user_role_function;
+        }
+    }
     if(in_array($role, config('permissions.submit_case')) ) {
         return true;
     }
@@ -32,6 +42,11 @@ function caseSubmittersRoles() {
 }
 function caseHighlightsRoles() {
     $role = (session()->get('user')->role=='admin')?session()->get('user')->role:session()->get('user')->user_role_function;
+    if( $role == 'admin') {
+        if(isset(session()->get('user')->user_role_function) && strlen(session()->get('user')->user_role_function) > 1) {
+            $role = session()->get('user')->user_role_function;
+        }
+    }
     if(in_array($role, config('permissions.highlight')) ) {
         return true;
     }
@@ -39,6 +54,11 @@ function caseHighlightsRoles() {
 }
 function caseCategoriesRoles() {
     $role = (session()->get('user')->role=='admin')?session()->get('user')->role:session()->get('user')->user_role_function;
+    if( $role == 'admin') {
+        if(isset(session()->get('user')->user_role_function) && strlen(session()->get('user')->user_role_function) > 1) {
+            $role = session()->get('user')->user_role_function;
+        }
+    }
     if(in_array($role, config('permissions.manage_category')) ) {
         return true;
     }
@@ -46,6 +66,11 @@ function caseCategoriesRoles() {
 }
 function caseApproversRoles() {
     $role = (session()->get('user')->role=='admin')?session()->get('user')->role:session()->get('user')->user_role_function;
+    if( $role == 'admin') {
+        if(isset(session()->get('user')->user_role_function) && strlen(session()->get('user')->user_role_function) > 1) {
+            $role = session()->get('user')->user_role_function;
+        }
+    }
     if(in_array($role, config('permissions.approve_case')) ) {
         return true;
     }
@@ -53,6 +78,11 @@ function caseApproversRoles() {
 }
 function userManagerRoles() {
     $role = (session()->get('user')->role=='admin')?session()->get('user')->role:session()->get('user')->user_role_function;
+    if( $role == 'admin') {
+        if(isset(session()->get('user')->user_role_function) && strlen(session()->get('user')->user_role_function) > 1) {
+            $role = session()->get('user')->user_role_function;
+        }
+    }
     if(in_array($role, config('permissions.manage_user')) ) {
         return true;
     }

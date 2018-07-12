@@ -42,7 +42,7 @@ class UserController extends Controller
             'auth_type' => 'required',
             'subscription_period' => 'numeric|min:1|max:365'
         ]);
-
+        \Log::info(json_encode($request->all()));
         if($validator->fails()) {
             return response()->json(['error' => $validator->errors()],422);
         }

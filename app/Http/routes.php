@@ -24,7 +24,7 @@ Route::group(['middleware' => ['web']], function() {
 });
 
 // "AUTHENTICATED ROUTE - WEB USERS"
-Route::group(['middleware' => ['session_auth', 'web_user']], function() {
+Route::group(['middleware' => ['session_auth']], function() {
     // "TOP PAGE"
     Route::get('/', 
         [
