@@ -13,10 +13,11 @@
         <div class="box-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
                 &nbsp;
-
+                @if( userManagerRoles() )
                 <div class="input-group-btn">
-                <button type="button" class="btn btn-success" onclick="location.href='/users/add'">Add User</button>
+                    <button type="button" class="btn btn-success" onclick="location.href='/users/add'">Add User</button>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -29,7 +30,7 @@
                 <th>Role</th>
                 <th>Authentication</th>
                 <th>Cases</th>
-                @if( is_null(session()->get('user')->user_role_function) )
+                @if( userManagerRoles() )
                 <th>Action</th>
                 @endif
             </tr>
@@ -46,7 +47,7 @@
                     <span class="label label-warning">{{$user->pending}} Pending</span>
                     <span class="label label-danger">{{$user->disapprove}} Disapproved</span>
                 </td>
-                @if( is_null(session()->get('user')->user_role_function) )
+                @if( userManagerRoles() )
                 <td>
                     <span style="cursor: pointer;" class="label label-info" onclick='window.location.href="{{route('getEditUser', ['user_id'=> $user->id])}}"'>Edit</span>
                     <span style="cursor: pointer;" class="label label-danger" onclick="deleteUser({{$user->id}});">Delete</span>

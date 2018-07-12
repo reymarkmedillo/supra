@@ -27,6 +27,19 @@ class CategoryController extends Controller
      */
     public function createCategory() 
     {
+        if(nonPaymentRoles()) {
+            if(!caseCategoriesRoles()) {
+                abort(404);
+            }
+        } else {
+            if (!checkIfPaid()) {
+                abort(404);
+            } else {
+                if(!caseCategoriesRoles()) {
+                    abort(404);
+                }
+            }
+        }
         $categories = $this->case->getAllCategories();
         
         return view('category.add', ['categories'=> $categories->categories]);
@@ -38,6 +51,19 @@ class CategoryController extends Controller
      */
     public function editCategory() 
     {
+        if(nonPaymentRoles()) {
+            if(!caseCategoriesRoles()) {
+                abort(404);
+            }
+        } else {
+            if (!checkIfPaid()) {
+                abort(404);
+            } else {
+                if(!caseCategoriesRoles()) {
+                    abort(404);
+                }
+            }
+        }
         $categories = $this->case->getAllCategories();
         
         return view('category.edit', ['categories'=> $categories->categories]);
@@ -67,6 +93,19 @@ class CategoryController extends Controller
      */
     public function updateCategory($category_id) 
     {
+        if(nonPaymentRoles()) {
+            if(!caseCategoriesRoles()) {
+                abort(404);
+            }
+        } else {
+            if (!checkIfPaid()) {
+                abort(404);
+            } else {
+                if(!caseCategoriesRoles()) {
+                    abort(404);
+                }
+            }
+        }
         $categories = $this->case->getAllCategories();
         $category = $this->case->getCategoryInfo($category_id);
         if(!isset($category->category->id)) {

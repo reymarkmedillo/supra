@@ -11,22 +11,24 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
         <ul class="nav navbar-nav">
-          @if( session()->get('user')->role == 'admin')
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Case <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
+                @if( (nonPaymentRoles() && caseSubmittersRoles()) || (checkIfPaid() && caseSubmittersRoles()) )
                 <li><a href="{{route('createCase')}}">Add Case</a></li>
+                @endif
                 <li class="divider"></li>
                 <li><a href="{{route('listCase')}}">Drafts</a></li>
                 <li><a href="{{route('listApprovedCase')}}">Approved</a></li>
               </ul>
             </li>
-          @endif
+          @if( (nonPaymentRoles() && caseHighlightsRoles()) || (checkIfPaid() && caseHighlightsRoles()) )
           <li><a href="{{route('getUserHighlights')}}">My Highlights</a></li>
-          @if( (session()->get('user')->role == 'admin' && empty(session()->get('user')->user_role_function)) && (session()->get('user')->auth_type == 'multiple' || session()->get('user')->auth_type == 'normal') )
+          @endif
+          @if( userManagerRoles() )
             <li><a href="{{route('getUsers')}}">Manage Users</a></li>
           @endif
-          @if( session()->get('user')->role == 'admin')
+          @if( (nonPaymentRoles() && caseCategoriesRoles()) || (checkIfPaid() && caseCategoriesRoles()) )
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Category <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
