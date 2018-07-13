@@ -14,6 +14,20 @@ class CaseController extends Controller
     }
 
     public function createCase() {
+        if(nonPaymentRoles()) {
+            if(!caseSubmittersRoles()) {
+                abort(404);
+            }
+        } else {
+            if (!checkIfPaid()) {
+                abort(404);
+            } else {
+                if(!caseSubmittersRoles()) {
+                    abort(404);
+                }
+            }
+        }
+
         $top_categories = $this->case->getCategory(0);
         $case_list = $this->case->getAllDropdownDraftCases();
         return view('case.add', [
@@ -90,6 +104,9 @@ class CaseController extends Controller
     }
 
     public function postApproveCase(Request $request, $case_id) {
+        if(!caseApproversRoles()) {
+            abort(404);
+        }
         $case = $this->case->approveDraftCase($case_id, $request->all());
         return response()->json($case);
     }

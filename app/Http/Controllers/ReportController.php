@@ -36,6 +36,19 @@ class ReportController extends Controller
      */
     public function getCategoryTree(Request $request) 
     {
+        if(nonPaymentRoles()) {
+            if(!caseCategoriesRoles()) {
+                abort(404);
+            }
+        } else {
+            if (!checkIfPaid()) {
+                abort(404);
+            } else {
+                if(!caseCategoriesRoles()) {
+                    abort(404);
+                }
+            }
+        }
         $request->request->add(['parent_id' => "0"]);
         $categories = $this->case->getAllCategories($request->all());
         return view('report.main-category-selection', ['categories'=> $categories->categories]);
@@ -49,6 +62,19 @@ class ReportController extends Controller
      */
     public function postCategoryTree(Request $request) 
     {
+        if(nonPaymentRoles()) {
+            if(!caseCategoriesRoles()) {
+                abort(404);
+            }
+        } else {
+            if (!checkIfPaid()) {
+                abort(404);
+            } else {
+                if(!caseCategoriesRoles()) {
+                    abort(404);
+                }
+            }
+        }
         $case_list = $this->case->getAllDropdownDraftCases($request->all());
 
         $rw = false;

@@ -42,7 +42,7 @@
                     <div class="col-md-4" >
                         <label>&nbsp;</label>
                         <div class="form-group">
-                            <div class="checkbox" id="role_function">
+                            <div class="radio" id="role_function">
                             
                             </div>
                         </div>
@@ -126,13 +126,18 @@
 <script type="text/javascript">
 function getUserFunction() {
     var user_functions= <?php echo json_encode(config('define.user_functions')); ?>;
+    var user_role_function = "{{$user->user_profile->user_role_function}}";
     var role = $.trim($("#role").val()).replace(' ', '+');
     var html = "";
     if(user_functions[role]) {
         var user_func = user_functions[role];
         for (let index = 0; index < user_func.length; index++) {
             const func = user_func[index];
-            html += "<label><input type='checkbox' name='user_function' id='user_function' value='"+func+"'>"+func+"</label>";
+            if(func.toLowerCase() ==  user_role_function) {
+                html += "<label><input type='radio' name='user_function' checked='checked' id='user_function' value='"+func+"'>"+func+"</label>";
+            } else {
+                html += "<label><input type='radio' name='user_function' id='user_function' value='"+func+"'>"+func+"</label>";
+            }
         }
         $('#role_function').empty();
         $('#role_function').append(html);
@@ -140,9 +145,10 @@ function getUserFunction() {
         $('#role_function').empty();
     }
 
-    $("#user_function").on('change', function() {
+    $("input[type=radio][name=user_function]").on('change', function() {
       if ($(this).is(':checked')) {
-        html = "<input type='hidden' name='user_role_function' id='user_role_function' value='"+($(this).val()).toLowerCase()+"'>"
+        html = "<input type='hidden' name='user_role_function' id='user_role_function' value='"+($(this).val()).toLowerCase()+"'>";
+        $('#user_role_function').remove();
         $('#role_function').append(html);
       } else {
         $('#user_role_function').remove();
@@ -170,6 +176,7 @@ function updateUser() {
             user_role_function: $("#user_role_function").val(),
             subscription_period: $("#subscription_period").val()
         };
+
         $.ajax({
           type: 'POST',
           data: frm_data,
@@ -231,7 +238,6 @@ $( document ).ready(function() {
     var user_role_function = "{{$user->user_profile->user_role_function}}";
 
     if(user_role_function) {
-        $('#user_function').attr('checked', true);
         var html = "<input type='hidden' name='user_role_function' id='user_role_function' value='"+user_role_function.toLowerCase()+"'>"
         $('#role_function').append(html);
     }

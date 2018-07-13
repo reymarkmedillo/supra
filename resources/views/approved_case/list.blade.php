@@ -23,7 +23,7 @@
                 <th class="col-md-1">Scra</th>
                 <th class="col-md-1">Date</th>
                 <th class="col-md-2">Topic</th>
-                @if(session()->get('user')->role == 'admin')
+                @if(caseApproversRoles())
                 <th class="col-md-1"></th>
                 @endif
             </tr>
@@ -47,7 +47,7 @@
                 <td>{{$case->scra}}</td>
                 <td>{{$case->date}}</td>
                 <td>{{$case->topic}}</td>
-                @if(session()->get('user')->role == 'admin')
+                @if(caseApproversRoles())
                   <td>
                     <button type="button" class="btn btn-success btn-xs" onclick='location.href="{{route('viewApprovedCase', $case->id)}}";' id="btnEdit{{$case->id}}">Edit</button>
                       <button type="button" class="btn btn-danger btn-xs" id="btnDelete{{$case->id}}" onclick="deleteCase({{$case->id}})">Delete</button>

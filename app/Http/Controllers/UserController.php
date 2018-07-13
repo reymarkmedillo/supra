@@ -29,6 +29,9 @@ class UserController extends Controller
     }
 
     public function postUpdateUser($user_id, Request $request) {
+        if(!userManagerRoles()) {
+            abort(404);
+        }
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email',
             'role' => 'required',
@@ -39,7 +42,7 @@ class UserController extends Controller
             'auth_type' => 'required',
             'subscription_period' => 'numeric|min:1|max:365'
         ]);
-
+        \Log::info(json_encode($request->all()));
         if($validator->fails()) {
             return response()->json(['error' => $validator->errors()],422);
         }
@@ -53,18 +56,24 @@ class UserController extends Controller
     }
 
     public function getUsers() {
-        if(session()->get('user')->role != 'admin') {
-            return redirect(route('top'));
+        if(!userManagerRoles()) {
+            abort(404);
         }
         $users = $this->user->getUsers()->users;
         return view('user.list', compact('users'));
     }
 
     public function getAddUser() {
+        if(!userManagerRoles()) {
+            abort(404);
+        }
         return view('user.add');
     }
 
     public function postAddUser(Request $request) {
+        if(!userManagerRoles()) {
+            abort(404);
+        }
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email',
             'role' => 'required',
@@ -87,6 +96,9 @@ class UserController extends Controller
     }
 
     public function getEditUser($id) {
+        if(!userManagerRoles()) {
+            abort(404);
+        }
         $user = $this->user->updateUserProfile(array(), $id);
 
         if($user->result == config('define.result.success')) {
@@ -122,11 +134,27 @@ class UserController extends Controller
     }
 
     public function postRemoveUser($user_id, Request $request) {
+        if(!userManagerRoles()) {
+            abort(404);
+        }
         $user = $this->user->postRemoveUser($request->all(), $user_id);
         return response()->json($user);
     }
 
     public function getUserHighlights() {
+        if(nonPaymentRoles()) {
+            if(!caseHighlightsRoles()) {
+                abort(404);
+            }
+        } else {
+            if (!checkIfPaid()) {
+                abort(404);
+            } else {
+                if(!caseHighlightsRoles()) {
+                    abort(404);
+                }
+            }
+        }
         $highlights = $this->user->getUserHighlights(session()->get('user')->user_id);
         $temp_array = array();
         $final_array = array();
