@@ -28,7 +28,7 @@
                     @endif
                     <div id="{{$category->id}}"></div>
                     <!-- LEVEL 1 -->
-                    @if(is_array($category->children) && count($category->children) > 1)
+                    @if(is_array($category->children) && count($category->children) > 0)
                     <ol type="A">
                         @foreach($category->children as $subcategory1)
                         <li> {{$subcategory1->name}} &nbsp;&nbsp;&nbsp; 
@@ -37,7 +37,7 @@
                             @endif
                             <div id="{{$subcategory1->id}}"></div>
                             <!-- LEVEL 2 -->
-                            @if(is_array($subcategory1->children) && count($subcategory1->children) > 1)
+                            @if(is_array($subcategory1->children) && count($subcategory1->children) > 0)
                             <ol type="1">
                                 @foreach($subcategory1->children as $subcategory2)
                                 <li> {{$subcategory2->name}} &nbsp;&nbsp;&nbsp; 
@@ -46,7 +46,7 @@
                                     @endif
                                     <div id="{{$subcategory2->id}}"></div>
                                     <!-- LEVEL 3 -->
-                                    @if(is_array($subcategory2->children) && count($subcategory2->children) > 1)
+                                    @if(is_array($subcategory2->children) && count($subcategory2->children) > 0)
                                     <ol type="a">
                                         @foreach($subcategory2->children as $subcategory3)
                                         <li> {{$subcategory3->name}} &nbsp;&nbsp;&nbsp; 
@@ -68,21 +68,6 @@
                     @endif
                 </li>
                 @endforeach
-                <!-- <li>Lorem ipsum dolor sit amet</li>
-                <li>Consectetur adipiscing elit</li>
-                <li>Integer molestie lorem at massa</li>
-                <li>Facilisis in pretium nisl aliquet</li> -->
-                <!-- <li>Nulla volutpat aliquam velit
-                  <ol>
-                    <li>Phasellus iaculis neque</li>
-                    <li>Purus sodales ultricies</li>
-                    <li>Vestibulum laoreet porttitor sem</li>
-                    <li>Ac tristique libero volutpat at</li>
-                  </ol>
-                </li>
-                <li>Faucibus porta lacus fringilla vel</li>
-                <li>Aenean sit amet erat nunc</li>
-                <li>Eget porttitor lorem</li> -->
             </ol>
         </div>
     </div>
