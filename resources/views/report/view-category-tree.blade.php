@@ -20,7 +20,7 @@
     <!-- info row -->
     <div class="row invoice-info">
         <div class="col-sm-12">
-            <ol>
+            <ol type="I">
                 @foreach($category_tree as $category)
                 <li> {{$category->name}} &nbsp;&nbsp;&nbsp;
                     @if($rw)
@@ -29,7 +29,7 @@
                     <div id="{{$category->id}}"></div>
                     <!-- LEVEL 1 -->
                     @if(is_array($category->children) && count($category->children) > 1)
-                    <ol>
+                    <ol type="A">
                         @foreach($category->children as $subcategory1)
                         <li> {{$subcategory1->name}} &nbsp;&nbsp;&nbsp; 
                             @if($rw)
@@ -38,7 +38,7 @@
                             <div id="{{$subcategory1->id}}"></div>
                             <!-- LEVEL 2 -->
                             @if(is_array($subcategory1->children) && count($subcategory1->children) > 1)
-                            <ol>
+                            <ol type="1">
                                 @foreach($subcategory1->children as $subcategory2)
                                 <li> {{$subcategory2->name}} &nbsp;&nbsp;&nbsp; 
                                     @if($rw)
@@ -47,7 +47,7 @@
                                     <div id="{{$subcategory2->id}}"></div>
                                     <!-- LEVEL 3 -->
                                     @if(is_array($subcategory2->children) && count($subcategory2->children) > 1)
-                                    <ol>
+                                    <ol type="a">
                                         @foreach($subcategory2->children as $subcategory3)
                                         <li> {{$subcategory3->name}} &nbsp;&nbsp;&nbsp; 
                                             @if($rw)
