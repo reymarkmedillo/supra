@@ -132,11 +132,11 @@ function getUserFunction() {
     if(user_functions[role]) {
         var user_func = user_functions[role];
         for (let index = 0; index < user_func.length; index++) {
-            const func = user_func[index];
+            var func = user_func[index];
             if(func.toLowerCase() ==  user_role_function) {
-                html += "<label><input type='radio' name='user_function' checked='checked' id='user_function' value='"+func+"'>"+func+"</label>";
+                html += "<label><input type='radio' name='user_function' checked='checked' id='user_function' value='"+func.replace(/\s+/g, '_')+"'>"+func+"</label>";
             } else {
-                html += "<label><input type='radio' name='user_function' id='user_function' value='"+func+"'>"+func+"</label>";
+                html += "<label><input type='radio' name='user_function' id='user_function' value='"+func.replace(/\s+/g, '_')+"'>"+func+"</label>";
             }
         }
         $('#role_function').empty();
@@ -202,7 +202,7 @@ function updateUser() {
                 $('#message').append(html);
                 $("#frmUpdateUser").trigger('reset');
                 $('#role_function').empty();
-                setTimeout(function() { window.location=window.location;},1000);
+                setTimeout(function() { window.location=window.location;},100);
             }
             $('#btnUpdateUser').prop('disabled',false);
             $('#loader').hide();

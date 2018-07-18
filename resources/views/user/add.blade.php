@@ -124,7 +124,7 @@
             var user_func = user_functions[role];
             for (let index = 0; index < user_func.length; index++) {
                 const func = user_func[index];
-                html += "<label><input type='checkbox' name='user_function' id='user_function' value='"+func+"'>"+func+"</label>";
+                html += "<label><input type='checkbox' name='user_function' id='user_function' value='"+func.replace(/\s+/g, '_')+"'>"+func+"</label>";
             }
             $('#role_function').empty();
             $('#role_function').append(html);
