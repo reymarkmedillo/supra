@@ -39,9 +39,24 @@
 $( document ).ready(function() {
     setCategorylist();
     $( "#btnDeleteCase" ).click(function( event ) {
+        event.preventDefault();
         var confirmDelete = confirm("Proceed to delete?");
         if (confirmDelete == true && $('#cat_search').val()) {
-            $( "#frmEditCategory" ).submit();
+            $.ajax({
+              type: 'POST',
+              data: {
+                btnDeleteCase: 1,
+                _token: $("input[name='_token']").val(),
+                cat_search: $('#cat_search').val()
+              },
+              url: '/category/edit',
+              success: function(res) {
+                window.location.reload();
+              },
+              error: function(err,msg) {
+                window.location.reload();
+              }
+            });
         }
     });
 });

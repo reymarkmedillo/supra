@@ -8,7 +8,7 @@
             <input type="hidden" value="{{csrf_token()}}" name="_token">
             <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Add New User</h3>
+                <h3 class="box-title">Change Password</h3>
                 @if($errors->any())
                     @foreach($errors->all() as $error)
                     <p class="text-red">{{$error}}</p>

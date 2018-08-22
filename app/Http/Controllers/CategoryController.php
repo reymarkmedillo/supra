@@ -80,9 +80,16 @@ class CategoryController extends Controller
         if ($request->has('btnUpdateCase')) {
             return redirect()->route('updateCategory', ['category_id'=> $request->input('cat_search')]);
         } elseif ($request->has('btnDeleteCase')) {
-            $this->case->deleteCategory($request->input('cat_search'));
-            return redirect()->back()->with("message", "Deleted Category Successfully.");
+            $delete_category = $this->case->deleteCategory($request->input('cat_search'));
+            if($delete_category) {
+                session()->put('message', 'Deleted Category Successfully.');
+                return response()->json(['result' => config('define.result.success'), 'message' => 'Deleted Category Successfully.']);
+            }
+            session()->put('message', 'There is some problem with your request.');
+            return response()->json(['result' => config('define.result.failure'), 'message' => 'There is some problem with your request.'],422);
         }
+        session()->put('message', 'There is some problem with your request.');
+        abort(404);
     }
     /**
      * To get category info and display in view
