@@ -88,6 +88,7 @@ class CaseController extends Controller
         if($request->has('date')) {
             $request->merge(array('date' => $date));
         }
+        \Log::info(json_encode($request->all()));
 
         $case = $this->case->createCase($request->all());
         return view('case.add', [
@@ -109,5 +110,10 @@ class CaseController extends Controller
         }
         $case = $this->case->approveDraftCase($case_id, $request->all());
         return response()->json($case);
+    }
+
+    public function postCreateXgr(Request $request) {
+        $case = $this->case->postCreateXgr($request->all());
+        return response()->json(['message'=>'success']);
     }
 }

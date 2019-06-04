@@ -27,7 +27,7 @@
     </div>
     <div class="box-body">
         <form role="form" method="post" action="{{route('postCreateCase')}}" enctype="multipart/form-data">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
           <div class="box-body">
             @if($message != '')
               <div class="col-md-12">
@@ -99,33 +99,48 @@
             </div>
             <!-- RELATED CASES -->
             <div class="col-md-12" id="case_related_container"></div>
+            
             <div id="not_related_case_area">
-              <!-- CASE TOPICS -->
-              <div class="form-group">
-
-                  <div class="col-md-6">
-                    <label for="case_grno">Topic</label>
-                    <select class="form-control select2" name="topic_select" id="topic_select"></select><br>
-                    <div class="input-group input-group-sm" style="margin-top: 4px;">
-                      <span class="input-group-addon">
-                        <input type="checkbox" id="enableCustomCategory">
-                      </span>
-                      <input type="text" class="form-control" id="customCategory" readonly="readonly" placeholder="add category manually ...">
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-info btn-flat" id="btnAddCustomCategory" onclick="addCustomCategory();"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
-                          </span>
-                    </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="case_grno" class="text-muted">G.R. Number</label>
+                  <label id="lbl_case_grno" class="text-danger"></label>
+                  
+                  <div class="btn-group pull-right">
+                      <div class="form-group">
+                        <button type="button" class="btn-xs btn-info btn-flat" onclick="postXgr();" id="btnSaveXgr">Click to Save</button>
+                        <p class="help-block text-green" id="xgr_msg_area"></p>
+                      </div>
                   </div>
-                  <div class="col-md-6">
-                      <select multiple class="form-control" name="topics" id="topics"></select> 
-                  </div>
-                  <input type="hidden" name="topic" id="topic">
+                </div> 
               </div>
+              
+              <!-- CASE TOPICS -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="case_grno">Topic</label>
+                  <select class="form-control select2" id="topic_select"></select><br>
+                  <div class="input-group input-group-sm" style="margin-top: 4px;">
+                    <span class="input-group-addon">
+                      <input type="checkbox" id="enableCustomCategory">
+                    </span>
+                    <input type="text" class="form-control" id="customCategory" readonly="readonly" placeholder="add category manually ...">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-info btn-flat" id="btnAddCustomCategory" onclick="addCustomCategory();"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                        </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <select multiple class="form-control" name="topics" id="topics"></select> 
+              </div>
+              <input type="hidden" id="topic">
+              
               <!-- CASE SYLLABUS -->
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="case_syllabus">Syllabus</label>
-                  <textarea id="syllabus" name="syllabus" rows="10" cols="80" style="resize: none;">{{old('syllabus')}}
+                  <textarea id="syllabus" rows="10" cols="80" style="resize: none;">{{old('syllabus')}}
                   </textarea>
                 </div>
               </div>
@@ -133,7 +148,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="case_syllabus">Case Digest</label>
-                  <textarea id="body" name="body" rows="10" cols="80" style="resize: none;"> {{old('body')}}
+                  <textarea id="body" rows="10" cols="80" style="resize: none;"> {{old('body')}}
                   </textarea>
                 </div>
               </div>
@@ -144,15 +159,18 @@
                   <input type="file" id="full_txt" name="full_txt">
                 </div>
               </div>
+              
             </div>
           </div>
 
           <div class="box-footer">
-            <div class="btn-group pull-right">
-              <button type="submit" class="btn btn-success btn-flat" id="btnSaveCase" onclick="setTopics();">Save</button>
-            </div>
+              <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-success btn-flat" id="btnSaveCase" onclick="setTopics();">Save</button>
+              </div>
           </div>
-        </form>
+          </form>
+
+
     </div>
   </div>
 </section>
@@ -280,7 +298,7 @@
               });
             },
             error: function(e) {
-              console.log(e);
+              // console.log(e);
             }
           });
         } else {
@@ -293,6 +311,7 @@
         }
       }
     });
+
     // "CHECKBOX EVENTS FOR CUSTOM CATEGORY"
     $('#enableCustomCategory').on('change', function() { // workaround to add/check for property "checked"
       if($(this).attr('checked')) {
@@ -305,6 +324,37 @@
         $('#customCategory').prop('readonly',false);
       }
     });
+
+    $( "#topics" )
+    .change(function() {
+      var topic = "";
+      $( "#topics option:selected" ).each(function() {
+        topic += $( this ).text() + " ";
+      });
+    });
+
+    $('#case_grno').change(function() {
+      $('#lbl_case_grno').text($(this).val());
+    });
+
+    // "TOPIC SELECTION ACTION"
+    $('#topics').change(function() {
+      var topic = "";
+      var selected_count = 0;
+      var grno = $('#case_grno').val();
+
+      $(this).find('option:selected').each(function() {
+        if(selected_count < 1) {
+          selected_count++;
+          topic += $( this ).text() + " ";
+        }
+      });
+      
+      if(grno.trim().length) {
+        
+      }
+      console.log(topic);
+    }); 
 
   });
 
@@ -321,8 +371,49 @@
     $('#topics').find('option').each(function () {
       topic_container.push($(this).val());
     });
-    console.log(topic_container);
+    // console.log(topic_container);
     $('#topic').val(topic_container.join());
+  }
+
+  // "AJAX CALL TO SAVE TO XGR TABLE - ADDED BY REY 05/26/2019"
+  function postXgr() {
+    var topic = "";
+    var grno = $('#case_grno').val();
+    var selected_count = 0;
+    $( "#topics option:selected" ).each(function() {
+      if(selected_count < 1) {
+        selected_count++;
+        topic += $( this ).text() + " ";
+      }
+    });
+
+    var xgr_data = {
+      syllabus: syllabus_editor.getData(),
+      body: body_editor.getData(),
+      topic: topic,
+      grno: grno.trim(),
+      _token: $('#_token').val()
+    };
+
+    if(selected_count == 1 && grno.trim().length) {
+      $.ajax({
+        type: 'POST',
+        url: '/case/new/xgr',
+        data: xgr_data,
+        success: function(res) {
+          $('#btnSaveXgr').text('Save');
+          $('#xgr_msg_area').text('Saved successfully.');
+        },
+        error: function(res) {
+          $('#xgr_msg_area').text('Failed to save.');
+        }
+      });
+      setTimeout(function() {
+        $("#xgr_msg_area").remove();
+      }, 5000);
+    } else {
+      alert('Please select one Topic or check if you added a GR number.');
+    }
   }
 
 

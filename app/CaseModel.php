@@ -75,6 +75,11 @@ class CaseModel extends ApiModel
         return $res->getBody();
     }
 
+    public function postCreateXgr($data) {
+        $res = $this->callByAuth('POST', env('API_URL').'/case/approved/create-xgr', $data);
+        return $res->getBody();
+    }
+
     public function deleteCase($case_id) {
         $res = $this->callByAuth('GET', env('API_URL').'/remove/'.$case_id);
         return $res->getBody();

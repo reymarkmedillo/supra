@@ -53,6 +53,8 @@ Route::group(['middleware' => ['session_auth']], function() {
     Route::post('/list-dropdown/case-by-category', ['as'=>'getCasesByCategory', 'uses'=>'ReportController@getCasesByCategory']);
     Route::get('/case/remove/{case_id}', ['as'=>'deleteCase', 'uses'=>'CaseApprovedController@deleteCase']);
     Route::get('/users/remove/{user_id}', ['as'=>'postRemoveUser', 'uses'=>'UserController@postRemoveUser']);
+    Route::post('/case/new/xgr', ['as'=>'postCreateXgr', 'uses'=>'CaseController@postCreateXgr']);
+
     // "CATEGORIES"
     Route::get('/category/new', ['as'=> 'createCategory','uses'=> 'CategoryController@createCategory']);
     Route::post('/category/new', ['as'=> 'postCreateCategory','uses'=> 'CategoryController@postCreateCategory']);
