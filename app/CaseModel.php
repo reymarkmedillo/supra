@@ -76,7 +76,12 @@ class CaseModel extends ApiModel
     }
 
     public function postCreateXgr($data) {
-        $res = $this->callByAuth('POST', env('API_URL').'/case/approved/create-xgr', $data);
+        $res = $this->callByAuth('POST', env('API_URL').'/case/create-xgr', $data);
+        return $res->getBody();
+    }
+
+    public function postViewXgr($data) {
+        $res = $this->callByAuth('POST', env('API_URL').'/case/view-xgr', $data);
         return $res->getBody();
     }
 

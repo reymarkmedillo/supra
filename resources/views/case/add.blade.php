@@ -351,9 +351,36 @@
       });
       
       if(grno.trim().length) {
-        
+        var xgr_data = {
+          grno: grno.trim(),
+          topic: topic,
+          _token: $('#_token').val()
+        };
+
+        $.ajax({
+          type: 'POST',
+          url: '/case/view/xgr',
+          data: xgr_data,
+          success: function(res) {
+            if(res.xgr){
+              if(res.xgr.syllabus) {
+                syllabus_editor.setData(res.xgr.syllabus);
+              } else {
+                syllabus_editor.setData('');
+              }
+
+              if(res.xgr.body) {
+                body_editor.setData(res.xgr.body);
+              } else {
+                body_editor.setData('');
+              }
+            }
+          },
+          error: function(res) {
+            $('#xgr_msg_area').text('Failed to save.');
+          }
+        });
       }
-      console.log(topic);
     }); 
 
   });
@@ -409,7 +436,7 @@
         }
       });
       setTimeout(function() {
-        $("#xgr_msg_area").remove();
+        $('#xgr_msg_area').text('');
       }, 5000);
     } else {
       alert('Please select one Topic or check if you added a GR number.');

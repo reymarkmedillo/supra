@@ -116,4 +116,9 @@ class CaseController extends Controller
         $case = $this->case->postCreateXgr($request->all());
         return response()->json(['message'=>'success']);
     }
+
+    public function postViewXgr(Request $request) {
+        $case = $this->case->postViewXgr($request->all());
+        return response()->json(['message'=>'success', 'xgr'=>$case->xgr]);
+    }
 }

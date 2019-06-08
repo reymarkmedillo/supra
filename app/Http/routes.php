@@ -47,13 +47,14 @@ Route::group(['middleware' => ['session_auth']], function() {
     Route::get('/users/add', ['as'=>'getAddUser', 'uses'=>'UserController@getAddUser']);
     Route::post('/users/add', ['as'=>'postAddUser', 'uses'=>'UserController@postAddUser']);
     Route::get('/users/view/{user_id}', ['as'=>'getEditUser', 'uses'=>'UserController@getEditUser']);
-    // "AJAX ROUTES"
-    Route::get('/case/category/{parent_id}', ['as'=> 'getCategory','uses'=> 'CaseController@getCategory']);
-    Route::post('/case/approve/{case_id}', ['as'=>'postApproveCase', 'uses'=>'CaseController@postApproveCase']);
-    Route::post('/list-dropdown/case-by-category', ['as'=>'getCasesByCategory', 'uses'=>'ReportController@getCasesByCategory']);
-    Route::get('/case/remove/{case_id}', ['as'=>'deleteCase', 'uses'=>'CaseApprovedController@deleteCase']);
-    Route::get('/users/remove/{user_id}', ['as'=>'postRemoveUser', 'uses'=>'UserController@postRemoveUser']);
-    Route::post('/case/new/xgr', ['as'=>'postCreateXgr', 'uses'=>'CaseController@postCreateXgr']);
+        // "AJAX ROUTES"
+        Route::get('/case/category/{parent_id}', ['as'=> 'getCategory','uses'=> 'CaseController@getCategory']);
+        Route::post('/case/approve/{case_id}', ['as'=>'postApproveCase', 'uses'=>'CaseController@postApproveCase']);
+        Route::post('/list-dropdown/case-by-category', ['as'=>'getCasesByCategory', 'uses'=>'ReportController@getCasesByCategory']);
+        Route::get('/case/remove/{case_id}', ['as'=>'deleteCase', 'uses'=>'CaseApprovedController@deleteCase']);
+        Route::get('/users/remove/{user_id}', ['as'=>'postRemoveUser', 'uses'=>'UserController@postRemoveUser']);
+        Route::post('/case/new/xgr', ['as'=>'postCreateXgr', 'uses'=>'CaseController@postCreateXgr']);
+        Route::post('/case/view/xgr', ['as'=> 'postViewXgr', 'uses'=>'CaseController@postViewXgr']);
 
     // "CATEGORIES"
     Route::get('/category/new', ['as'=> 'createCategory','uses'=> 'CategoryController@createCategory']);
