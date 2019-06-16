@@ -44,7 +44,7 @@
                 </td>
                 <td>{{$case->scra}}</td>
                 <td>{{$case->date}}</td>
-                <td></td> <!-- topic -->
+                <td>{{implode(',', array_column($case->xgr, 'topic'))}}</td>
                 @if(caseApproversRoles())
                   <td>
                       <button type="button" class="btn btn-success btn-xs" onclick="approve({{$case->id}})" id="btnApprove{{$case->id}}">Approve</button>
