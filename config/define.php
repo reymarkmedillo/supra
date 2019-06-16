@@ -31,7 +31,7 @@ return [
         'multiple' => 'Multiple (Web/App)'
     ],
     'fulltxt_path' => '/files/fulltxts/',
-    'version' => '1.2.1'
+    'version' => '5.0.1'
 ];
 
 ?>

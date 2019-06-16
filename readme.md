@@ -13,3 +13,7 @@ If you discover a security vulnerability/errors within http://admin.tier-app.com
 ## License
 TierApp Web is using Laravel Framework.
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+## Version 5.0.1
+- Added saving of multiple topics,syllabus,body per GR number
+- Update the data from topics column in case/list and case/approved/list
