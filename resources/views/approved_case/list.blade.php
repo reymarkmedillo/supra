@@ -5,7 +5,6 @@
 <!-- DataTables -->
 <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
 <section class="content">
 <div class="box">
     <div class="box-header">
@@ -46,7 +45,13 @@
                 </td>
                 <td>{{$case->scra}}</td>
                 <td>{{$case->date}}</td>
-                <td>{{implode(',', array_column($case->xgr, 'topic'))}}</td>
+                <td>
+		    @if($case->xgr)
+		    @foreach($case->xgr as $value)
+			{{$value->topic}},
+		    @endforeach
+		    @endif
+		</td>
                 @if(caseApproversRoles())
                   <td>
                     <button type="button" class="btn btn-success btn-xs" onclick='location.href="{{route('viewApprovedCase', $case->id)}}";' id="btnEdit{{$case->id}}">Edit</button>
