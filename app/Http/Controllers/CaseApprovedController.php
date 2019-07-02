@@ -35,13 +35,17 @@ class CaseApprovedController extends Controller {
             abort(404);
         }
 
-        $case_category = json_encode($case->case->topic);
+        $case_category = array();
+
+        if($case->case->xgr) {
+            foreach($case->case->xgr as $value) {
+                array_push($case_category, $value->topic);
+            }
+        }
+
         $case_parent = 0;
         $case_child = 0;
-        if(strpos($case_category, ',') !== false) {
-            $new_case_category = explode(",",$case_category);
-            $case_category = $new_case_category;
-        }
+
         if(isset($case->case->parent->id)) {
             $case_parent = $case->case->parent->id;
         }

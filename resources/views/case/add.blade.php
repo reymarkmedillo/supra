@@ -407,7 +407,7 @@
     var topic = "";
     var grno = $('#case_grno').val();
     var selected_count = 0;
-    $( "#topics option:selected" ).each(function() {
+    $( "#topics option:selected" ).each(function() { // add here to update the category list based on category selected in textarea
       if(selected_count < 1) {
         selected_count++;
         topic += $( this ).text() + " ";

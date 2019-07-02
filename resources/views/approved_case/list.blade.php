@@ -45,13 +45,7 @@
                 </td>
                 <td>{{$case->scra}}</td>
                 <td>{{$case->date}}</td>
-                <td>
-		    @if($case->xgr)
-		    @foreach($case->xgr as $value)
-			{{$value->topic}},
-		    @endforeach
-		    @endif
-		</td>
+                <td>{{implode(',', array_column($case->xgr, 'topic'))}}</td>
                 @if(caseApproversRoles())
                   <td>
                     <button type="button" class="btn btn-success btn-xs" onclick='location.href="{{route('viewApprovedCase', $case->id)}}";' id="btnEdit{{$case->id}}">Edit</button>
