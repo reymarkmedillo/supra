@@ -134,7 +134,7 @@
               <div class="col-md-6">
                   <select multiple class="form-control" name="topics" id="topics"></select> 
               </div>
-              <input type="hidden" id="topic">
+              <input type="hidden" id="topic" name="topic">
               
               <!-- CASE SYLLABUS -->
               <div class="col-md-12">
