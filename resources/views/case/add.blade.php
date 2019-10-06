@@ -396,9 +396,8 @@
   function setTopics() {
     topic_container = [];
     $('#topics').find('option').each(function () {
-      topic_container.push($(this).val());
+      topic_container.push($(this).text());
     });
-    // console.log(topic_container);
     $('#topic').val(topic_container.join());
   }
 
