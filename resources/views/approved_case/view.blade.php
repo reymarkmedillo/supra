@@ -263,12 +263,16 @@
     $('#topics').dblclick(function() {
       if($(this).find('option:selected')[0]) {
         selectedIndex = $(this).find('option:selected')[0].index;
-        $(this).find('option').each(function () {
-            if(selectedIndex > $(this).index()) {
-            } else {
-              $('#topics option').filter('[value="'+$(this).val()+'"]').remove();
-            }
-        });
+
+        selectedValue = $(this).find('option:selected').val();
+        $('#topics option').filter('[value="'+selectedValue+'"]').remove(); //remove the selected option
+
+        // $(this).find('option').each(function () {
+        //     if(selectedIndex > $(this).index()) {
+        //     } else {
+        //       $('#topics option').filter('[value="'+$(this).val()+'"]').remove();
+        //     }
+        // });
         
 
 
